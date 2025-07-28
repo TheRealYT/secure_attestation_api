@@ -16,6 +16,8 @@ app.post('/protected-route', express.json(), async (req, res) => {
 
   await verifyAttestation(certChain, challenge, signature);
 
+  console.log('Passed!', challenge);
+
   res.send('Protected content accessed!');
 });
 
