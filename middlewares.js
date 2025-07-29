@@ -1,7 +1,13 @@
 const {verifyAttestation} = require('./index');
 const {logger} = require('./logger');
 
-const validHashes = process.env.APP_HASHES.split('|');
+const DELIMITER = '|';
+
+const bootState = process.env.SEC_BOOT_STATE.split(DELIMITER);
+const secLevel = process.env.SEC_SEC_LEVEL.split(DELIMITER);
+const authTypes = process.env.SEC_AUTH_TYPES.split(DELIMITER);
+const pkgNames = process.env.SEC_APP_PKG_NAMES.split(DELIMITER);
+const validHashes = process.env.SEC_APP_HASHES.split(DELIMITER);
 
 async function protect(req, res, next) {
   const challenge = req.headers['x-challenge'];
@@ -15,7 +21,7 @@ async function protect(req, res, next) {
 
   logger.info('Queue', {uuid, path: req.path, challenge, signature, certChainRaw});
 
-  const certChain = certChainRaw.split('|');
+  const certChain = certChainRaw.split(DELIMITER);
 
   await verifyAttestation(certChain, challenge, signature)
     .then(result => {
@@ -23,11 +29,11 @@ async function protect(req, res, next) {
 
       if (
         result.deviceLocked === true &&
-        result.bootState === 'Verified' &&
-        (result.implSecLevel === 'TrustedEnvironment' || result.implSecLevel === 'StrongBox') &&
-        (result.storeSecLevel === 'TrustedEnvironment' || result.storeSecLevel === 'StrongBox') &&
-        result.authType === 'Fingerprint' &&
-        result.packageName === process.env.APP_PKG_NAME &&
+        bootState.includes(result.bootState) &&
+        secLevel.includes(result.implSecLevel) &&
+        secLevel.includes(result.storeSecLevel) &&
+        authTypes.includes(result.authType) &&
+        pkgNames.includes(result.packageName) &&
         !result.appSigns.some(s => !validHashes.includes(s))
       ) {
         return next();
