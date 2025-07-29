@@ -2,6 +2,9 @@ const path = require('node:path');
 const fs = require('node:fs');
 const express = require('express');
 const morgan = require('morgan');
+const compression = require('compression');
+const helmet = require('helmet');
+const {rateLimit} = require('express-rate-limit');
 const {protect} = require('./middlewares');
 const {logger} = require('./logger');
 
@@ -9,6 +12,15 @@ const publicDir = path.join(__dirname, 'public');
 const app = express();
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'logs', 'access.log'), {flags: 'a'});
 
+app.use(rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 100,
+  standardHeaders: 'draft-8',
+  legacyHeaders: false,
+  ipv6Subnet: 56,
+}));
+app.use(helmet());
+app.use(compression());
 app.use(express.static(publicDir));
 
 app.get('/', (req, res) => {
