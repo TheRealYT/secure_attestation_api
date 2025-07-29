@@ -197,8 +197,6 @@ async function verifyAttestation(certChain, challenge, sign) {
   const version = packageInfos.version;
   const appSigns = attestationApplicationId.signatureDigests.map(d => Buffer.from(d).toString('hex'));
   const authType = USER_AUTH_TYPE[hardware.userAuthType ?? 0];
-
-  console.log(packageName, version, appSigns);
 }
 
 module.exports = {verifyAttestation};
