@@ -41,4 +41,4 @@ app.use((err, req, res, _) => {
     res.status(500).send('Internal Error');
 });
 
-app.listen(3000, () => console.log('Started'));
+app.listen(process.env.PORT ?? 3000, () => console.log('Started'));
