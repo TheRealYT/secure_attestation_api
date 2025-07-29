@@ -100,22 +100,9 @@ async function validateCertChain(certs) {
 }
 
 async function checkRevocation(certs) {
-  // TODO: dynamic, https://android.googleapis.com/attestation/status
-  const entries = {
-    'entries': {
-      '2c8cdddfd5e03bfc': {
-        'status': 'REVOKED',
-        'expires': '2020-11-13',
-        'reason': 'KEY_COMPROMISE',
-        'comment': 'Key stored on unsecure system',
-      },
-      'c8966fcb2fbb0d7a': {
-        'status': 'SUSPENDED',
-        'reason': 'SOFTWARE_FLAW',
-        'comment': 'Bug in keystore causes this key malfunction b/555555',
-      },
-    },
-  };
+  // from https://android.googleapis.com/attestation/status
+  const data = require('./status.json');
+  const {entries} = data;
 
   for (const cert of certs) {
     if (cert.serialNumber in entries)
