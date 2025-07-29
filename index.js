@@ -21,18 +21,32 @@ const BOOT_STATE = {
   2: 'Unverified',
   3: 'Failed',
 };
+
 const USER_AUTH_TYPE = {
   0: 'no',
   1: 'Password',
   2: 'Fingerprint',
 };
 
-const PURPOSE = [2, 3];
+// ECC
 const ALGO = 3;
-const DIGEST = [4];
-const EC_CURVE = 1;
+
+// ECC key
+const KEY_SIZES = [256, 384, 521];
+
+// const EC_CURVE = 1;
+
+// sign, verify
+const PURPOSE = [2, 3];
+
+// not supported yet
+const DIGESTS = {
+  4: 'sha256',
+  5: 'sha384',
+  6: 'sha512',
+};
+
 const ORIGIN = 0;
-const KEY_SIZE = 256;
 
 /**
  * Extracts the first item from an array of type T.
@@ -157,16 +171,16 @@ async function verifyAttestation(certChain, challenge, sign) {
   if (hardware.algorithm !== ALGO)
     throw new Error('Unexpected algorithm');
 
-  if (hardware.keySize !== KEY_SIZE)
+  if (!KEY_SIZES.includes(hardware.keySize))
     throw new Error('Unexpected key size');
 
   // hardware.noAuthRequired
 
-  if (hardware.digest.some(d => !DIGEST.includes(d)))
+  if (hardware.digest.some(d => !(d in DIGESTS)))
     throw new Error('Unexpected digest');
 
-  if (hardware.ecCurve !== EC_CURVE)
-    throw new Error('Unexpected EC curve');
+  // if (hardware.ecCurve !== EC_CURVE)
+  //   throw new Error('Unexpected EC curve');
 
   if (hardware.origin !== ORIGIN)
     throw new Error('Unexpected origin');
