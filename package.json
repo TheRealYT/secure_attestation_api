@@ -1,6 +1,9 @@
 {
   "name": "android_attestetion",
   "version": "0.0.1",
+  "scripts": {
+    "start": "node --env-file=.env server.js"
+  },
   "dependencies": {
     "@peculiar/asn1-android": "^2.4.0",
     "@peculiar/asn1-schema": "^2.4.0",
