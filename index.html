@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>መክት v0.0.1-beta — Security Solution</title>
+    <meta name="title" content="መክት v0.0.1-beta — Verify Android Apps. Stop Tampering."/>
+    <meta name="description"
+          content="መክት is a security solution that ensures every request comes from your genuine app on a verified device."/>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://secure.yonathan.tech/"/>
+    <meta property="og:title" content="መክት v0.0.1-beta — Verify Android Apps. Stop Tampering."/>
+    <meta property="og:description"
+          content="መክት is a security solution that ensures every request comes from your genuine app on a verified device."/>
+    <meta property="og:image" content="https://secure.yonathan.tech/images/icon.svg"/>
+
+    <!-- X (Twitter) -->
+    <meta property="twitter:card" content="summary_large_image"/>
+    <meta property="twitter:url" content="https://secure.yonathan.tech/"/>
+    <meta property="twitter:title" content="መክት v0.0.1-beta — Verify Android Apps. Stop Tampering."/>
+    <meta property="twitter:description"
+          content="መክት is a security solution that ensures every request comes from your genuine app on a verified device."/>
+    <meta property="twitter:image" content="https://secure.yonathan.tech/images/icon.svg"/>
+
+    <link rel="shortcut icon" href="/images/icon.svg" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains%20Mono:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background: #121212;
+        color: #f5f5f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        background: #1e1e1e;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        text-align: center;
+        max-width: 400px;
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 26px;
+        margin-bottom: 16px;
+        color: #ffffff;
+      }
+
+      p {
+        font-size: 16px;
+        color: #cccccc;
+        margin-bottom: 30px;
+        line-height: 1.5;
+      }
+
+      .download-button {
+        gap: 10px;
+        display: inline-flex;
+        align-items: center;
+        background-color: #136e3c;
+        color: #ffffff;
+        font-weight: 600;
+        padding: 14px 28px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      .download-button:hover {
+        background-color: #2a7147;
+        transform: translateY(-2px);
+      }
+
+      .download-button:active {
+        transform: translateY(0);
+      }
+
+      p.version {
+        font-family: 'JetBrains Mono', monospace;
+        margin-bottom: 0;
+        margin-top: 10px;
+        font-size: small;
+      }
+
+      .glow-border {
+        position: relative;
+        border: 2px solid #aaffcc;
+        border-radius: 12px;
+        animation: glow 3s infinite ease-in-out;
+        background-color: white;
+      }
+
+      @keyframes glow {
+        0% {
+          box-shadow: 0 0 5px #aaffcc, 0 0 10px #aaffcc, 0 0 15px #aaffcc;
+        }
+        50% {
+          box-shadow: 0 0 10px #aaffe0, 0 0 20px #aaffe0, 0 0 30px #aaffe0;
+        }
+        100% {
+          box-shadow: 0 0 5px #aaffcc, 0 0 10px #aaffcc, 0 0 15px #aaffcc;
+        }
+      }
+
+      .icon {
+        margin-bottom: 10px;
+      }
+
+      h2 {
+        margin-bottom: 10px;
+      }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <img class="icon glow-border" src="/images/icon.svg" width="64" alt="Application Logo">
+        <h1>መክት</h1>
+        <h2>Become a Beta Tester</h2>
+        <p>This is our first release. It includes a basic security feature for demonstration. If anyone happens to find
+            a vulnerability or error, you're welcome to share it — and there may be a reward.</p>
+        <a class="download-button" href="/android/latest.apk" download>
+            <img src="/images/android.svg" alt=""> Download for Android
+        </a>
+        <p class="version">v0.0.1-beta</p>
+    </main>
+</body>
+</html>

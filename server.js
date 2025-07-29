@@ -1,6 +1,8 @@
 const express = require('express');
 const {verifyAttestation} = require('./index');
+const path = require('node:path');
 
+const publicDir = path.join(__dirname, 'public');
 const app = express();
 
 async function protect(req, res, next) {
@@ -21,6 +23,12 @@ async function protect(req, res, next) {
       next(err);
     });
 }
+
+app.use(express.static(publicDir));
+
+app.get('/', (req, res) => {
+  return res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 app.post('/protected-route', protect, (req, res) => {
   return res.send('Protected content accessed!\n Now, do your best whether using reveres-engineering or whatever, to access \n/secret-route\nOf course you will be rewarded');
