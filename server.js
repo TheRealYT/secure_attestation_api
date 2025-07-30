@@ -21,13 +21,16 @@ app.use(rateLimit({
 }));
 app.use(helmet());
 app.use(compression());
+
+app.enable("trust proxy");
+
+app.use(morgan('combined', {stream: accessLogStream}));
+
 app.use(express.static(publicDir));
 
 app.get('/', (req, res) => {
   return res.sendFile(path.join(__dirname, 'index.html'));
 });
-
-app.use(morgan('combined', {stream: accessLogStream}));
 
 app.use(express.json())
 
