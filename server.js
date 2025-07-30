@@ -29,6 +29,8 @@ app.get('/', (req, res) => {
 
 app.use(morgan('combined', {stream: accessLogStream}));
 
+app.use(express.json())
+
 app.post('/get-session', sessionGenerator);
 
 app.post('/protected-route', sessionValidator, protect, (req, res) => {

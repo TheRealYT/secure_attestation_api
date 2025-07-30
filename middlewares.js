@@ -26,6 +26,11 @@ async function sessionValidator(req, res, next) {
   res.status(403).send('Access denied!');
 }
 
+function get(obj, key, type = 'string') {
+  if (obj != null && key in obj && typeof obj[key] === type)
+    return obj[key];
+}
+
 async function protect(req, res, next) {
   const challenge = req.headers['x-challenge'];
   const signature = req.headers['x-signature'];
@@ -43,7 +48,13 @@ async function protect(req, res, next) {
   await verifyAttestation(certChain, challenge, signature)
     .then(result => {
       cache.del(challenge);
-      logger.info('Valid', {uuid, ...result});
+      logger.info('Valid', {
+        uuid, ...result,
+        model: get(req.body, 'model'),
+        manufacturer: get(req.body, 'manufacturer'),
+        brand: get(req.body, 'brand'),
+        device: get(req.body, 'device'),
+      });
 
       if (
         result.deviceLocked === true &&
