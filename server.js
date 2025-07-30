@@ -1,7 +1,7 @@
 const path = require('node:path');
-const fs = require('node:fs');
+// const fs = require('node:fs');
 const express = require('express');
-const morgan = require('morgan');
+// const morgan = require('morgan');
 const compression = require('compression');
 const helmet = require('helmet');
 const {rateLimit} = require('express-rate-limit');
@@ -10,7 +10,7 @@ const {logger} = require('./logger');
 
 const publicDir = path.join(__dirname, 'public');
 const app = express();
-const accessLogStream = fs.createWriteStream(path.join(__dirname, 'logs', 'access.log'), {flags: 'a'});
+// const accessLogStream = fs.createWriteStream(path.join(__dirname, 'logs', 'access.log'), {flags: 'a'});
 
 app.use(rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -22,12 +22,12 @@ app.use(rateLimit({
 app.use(helmet());
 app.use(compression());
 
-morgan.token('real-ip', (req) => req.socket.remoteAddress);
-morgan.token('xff', (req) => req.headers['x-forwarded-for'] || '-');
+// morgan.token('real-ip', (req) => req.socket.remoteAddress);
+// morgan.token('xff', (req) => req.headers['x-forwarded-for'] || '-');
 
-app.use(morgan(':real-ip (xff: :xff) - - [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"', {
-  stream: accessLogStream,
-}));
+// app.use(morgan(':real-ip (xff: :xff) - - [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"', {
+//   stream: accessLogStream,
+// }));
 
 app.use(express.static(publicDir));
 
