@@ -22,7 +22,12 @@ app.use(rateLimit({
 app.use(helmet());
 app.use(compression());
 
-app.use(morgan('combined', {stream: accessLogStream}));
+morgan.token('real-ip', (req) => req.socket.remoteAddress);
+morgan.token('xff', (req) => req.headers['x-forwarded-for'] || '-');
+
+app.use(morgan(':real-ip (xff: :xff) - - [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"', {
+  stream: accessLogStream,
+}));
 
 app.use(express.static(publicDir));
 
@@ -30,7 +35,7 @@ app.get('/', (req, res) => {
   return res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.use(express.json())
+app.use(express.json());
 
 app.post('/get-session', sessionGenerator);
 
