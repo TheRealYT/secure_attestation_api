@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const compression = require('compression');
 const helmet = require('helmet');
 const {rateLimit} = require('express-rate-limit');
-const {protect} = require('./middlewares');
+const {protect, sessionGenerator, sessionValidator} = require('./middlewares');
 const {logger} = require('./logger');
 
 const publicDir = path.join(__dirname, 'public');
@@ -29,11 +29,13 @@ app.get('/', (req, res) => {
 
 app.use(morgan('combined', {stream: accessLogStream}));
 
-app.post('/protected-route', protect, (req, res) => {
+app.post('/get-session', sessionGenerator);
+
+app.post('/protected-route', sessionValidator, protect, (req, res) => {
   return res.send('Protected content accessed!\n Now, do your best whether using reveres-engineering or whatever, to access \n/secret-route\nOf course you will be rewarded');
 });
 
-app.post('/secret-route', protect, (req, res) => {
+app.post('/secret-route', sessionValidator, protect, (req, res) => {
   return res.send(`You got the secret ${req.context}!\nSubmit it to https://t.me/TheRecepientRobot`);
 });
 
